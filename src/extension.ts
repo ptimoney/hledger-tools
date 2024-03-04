@@ -1,15 +1,12 @@
-/*---------------------------------------------------------
- * Copyright (C) Microsoft Corporation. All rights reserved.
- *--------------------------------------------------------*/
-
-import child_process = require("child_process");
 import * as vscode from "vscode";
+import { CheckOptions, check } from "./check";
+import { JournalOptions, Journal, AlignmentType } from "./journal";
 
 export function activate(context: vscode.ExtensionContext) {
-  const state = stateManager(context);
-  updateCache();
+  const diagnosticCollection =
+    vscode.languages.createDiagnosticCollection("hledger");
 
-  const provider = vscode.languages.registerCompletionItemProvider(
+  const completions = vscode.languages.registerCompletionItemProvider(
     "hledger",
     {
       async provideCompletionItems(
@@ -18,30 +15,44 @@ export function activate(context: vscode.ExtensionContext) {
         token: vscode.CancellationToken,
         context: vscode.CompletionContext
       ): Promise<vscode.CompletionItem[]> {
+        const configuration = vscode.workspace.getConfiguration();
+
+        const formatAmounts = configuration.get(
+          "hledger.formatting.formatAmounts",
+          true
+        );
+        const negativesInFrontOfCommodities = configuration.get(
+          "hledger.formatting.negativesInFrontOfCommodities",
+          true
+        );
+
+        const journalOptions: JournalOptions = {
+          formatAmounts: formatAmounts,
+          negativesInFrontOfCommodities: negativesInFrontOfCommodities,
+        };
+        const journal = new Journal(document, journalOptions);
+        await journal.updateJournal();
+
         const text = document.lineAt(position).text;
         if (!text.match(/^\s/)) {
           // Do not provide account name completions if the line is not indented.
           return [];
         }
 
-        const linePrefix = document
-          .lineAt(position)
-          .text.slice(0, position.character)
-          .trim();
-        const accountGroup = linePrefix.substring(
+        const beforeInLine = text.slice(0, position.character).trim();
+        const accountGroup = beforeInLine.substring(
           0,
-          linePrefix.lastIndexOf(":") + 1
+          beforeInLine.lastIndexOf(":") + 1
         );
 
-        const accounts = state.read() as String;
-
-        const accountNames = accounts
-          .split("\n")
-          .map((x) => x.trim())
-          .filter((x) => x.startsWith(accountGroup))
-          .map((x) => {
-            const endIndex = x.indexOf(":", accountGroup.length);
-            return x.substring(
+        // generate the next leaves of the accounts which start with the accounts on the line already, triggers on : or typing
+        const accountNames = Array.from(journal.accountMap)
+          .filter(([accountName, account]) =>
+            accountName.startsWith(accountGroup)
+          )
+          .map(([accountName, account]) => {
+            const endIndex = accountName.indexOf(":", accountGroup.length);
+            return accountName.substring(
               accountGroup.length,
               endIndex > 0 ? endIndex + 1 : undefined
             );
@@ -62,7 +73,9 @@ export function activate(context: vscode.ExtensionContext) {
             .lineAt(position)
             .text.slice(0, position.character)
             .lastIndexOf(":");
-          const lineStart = document.lineAt(position).text.indexOf(linePrefix);
+          const lineStart = document
+            .lineAt(position)
+            .text.indexOf(beforeInLine);
           const wordStartPosition = new vscode.Position(
             position.line,
             wordStart > 0 ? wordStart + 1 : lineStart
@@ -92,90 +105,262 @@ export function activate(context: vscode.ExtensionContext) {
   const formatter = vscode.languages.registerDocumentFormattingEditProvider(
     "hledger",
     {
-      provideDocumentFormattingEdits(document, options, token) {
-        const dotPos = 75;
-        const editor = vscode.window.activeTextEditor;
-        if (editor) {
-          const document = editor.document;
-          const p = new RegExp(
-            "^\\s+([\\[\\]\\w:\\s\\&_-]+)\\s+([-$£¥€¢\\d,_]+)(?:.\\d*)?.*$"
+      async provideDocumentFormattingEdits(
+        document: vscode.TextDocument,
+        options: vscode.FormattingOptions,
+        token: vscode.CancellationToken
+      ) {
+        const textEdits: vscode.TextEdit[] = [];
+
+        const configuration = vscode.workspace.getConfiguration();
+
+        const formatAmounts = configuration.get(
+          "hledger.formatting.formatAmounts",
+          true
+        );
+        const negativesInFrontOfCommodities = configuration.get(
+          "hledger.formatting.negativesInFrontOfCommodities",
+          true
+        );
+
+        const journalOptions: JournalOptions = {
+          formatAmounts: formatAmounts,
+          negativesInFrontOfCommodities: negativesInFrontOfCommodities,
+        };
+        const formatPostingLines = configuration.get(
+          "hledger.formatting.formatTransactions",
+          true
+        );
+
+        const formatWhiteSpace = configuration.get(
+          "hledger.formatting.formatWhiteSpace",
+          true
+        );
+
+        if (formatPostingLines) {
+          const defaultAlignments = new Proxy(
+            {
+              postAmountAlignment: 35,
+              costTypeAlignment: 7,
+              costAmountAlignment: 7,
+              assertionTypeAlignment: 7,
+              assertionAmountAlignment: 7,
+              assertionCostTypeAlignment: 7,
+              assertionCostAmountAlignment: 7,
+              commentAlignment: 7,
+            },
+            {}
           );
 
-          const textEdits: vscode.TextEdit[] = [];
+          const globalAlignments = Object.values(
+            configuration.get(
+              `hledger.formatting.globalAlignments`,
+              defaultAlignments
+            )
+          );
 
-          document
-            .getText()
-            .split("\n")
-            .map((line, lineNumber) => {
-              const match = line.match(p);
-              if (!match) {
+          const alignmentTypeConfig = configuration.get(
+            `hledger.formatting.alignment`,
+            AlignmentType.both
+          );
+
+          const alignmentType =
+            AlignmentType[alignmentTypeConfig as keyof typeof AlignmentType] ||
+            AlignmentType.both;
+
+          const journal = new Journal(document, journalOptions);
+          await journal.updateJournal();
+
+          journal.transactions.forEach((transaction) => {
+            if (transaction.documentUri !== document.uri) {
+              return;
+            }
+
+            transaction.updateTransactionAlignments(
+              globalAlignments,
+              alignmentType === AlignmentType.both
+            );
+
+            transaction.postings.forEach((posting) => {
+              if (
+                !(
+                  posting.amountHasCorrectSignature &&
+                  posting.postingCostHasCorrectSignature &&
+                  posting.assertionHasCorrectSignature &&
+                  posting.assertionCostHasCorrectSignature
+                )
+              ) {
                 return;
               }
-              const linePosDot = line.indexOf(match[2]) + match[2].length;
-              const linePosAmount = line.indexOf(match[2]);
-              const adjustment = dotPos - linePosDot;
-              if (adjustment > 0) {
-                const insertString = " ".repeat(adjustment);
+              const formattedPosting =
+                posting.formatTransactionAlignedPostingString(
+                  alignmentType,
+                  globalAlignments
+                );
+              if (posting.postingString === formattedPosting) {
+                return;
+              }
+
+              const startPos = document.positionAt(posting.postingIndex);
+
+              const endPos = document.positionAt(
+                posting.postingIndex + posting.postingString.length
+              );
+
+              textEdits.push(
+                vscode.TextEdit.replace(
+                  new vscode.Range(startPos, endPos),
+                  formattedPosting
+                )
+              );
+            });
+          });
+        }
+        if (formatWhiteSpace) {
+          const emptyLineRegEx = new RegExp(/^\s*$/m);
+
+          const textSplit = document.getText().split("\n");
+          textSplit.forEach((textLine, lineIndexInt) => {
+            if (lineIndexInt < textSplit.length - 1) {
+              if (
+                textSplit[lineIndexInt + 1].match(emptyLineRegEx) &&
+                textLine.match(emptyLineRegEx)
+              ) {
                 textEdits.push(
-                  vscode.TextEdit.insert(
-                    new vscode.Position(lineNumber, linePosAmount),
-                    insertString
+                  vscode.TextEdit.delete(
+                    new vscode.Range(lineIndexInt, 0, lineIndexInt + 1, 0)
                   )
                 );
-              } else if (adjustment < 0) {
+              } else if (textLine.match(emptyLineRegEx)) {
                 textEdits.push(
                   vscode.TextEdit.delete(
                     new vscode.Range(
-                      lineNumber,
-                      linePosAmount + adjustment,
-                      lineNumber,
-                      linePosAmount
+                      lineIndexInt,
+                      0,
+                      lineIndexInt,
+                      textLine.length
                     )
                   )
                 );
               }
-            });
-          return textEdits;
+            } else if (textLine.match(emptyLineRegEx)) {
+              textEdits.push(
+                vscode.TextEdit.delete(
+                  new vscode.Range(
+                    lineIndexInt,
+                    0,
+                    lineIndexInt,
+                    textLine.length
+                  )
+                )
+              );
+            }
+          });
         }
+
+        return textEdits;
       },
     }
   );
 
-  const saveEvent = vscode.workspace.onDidSaveTextDocument(() => {
-    updateCache();
-  });
-
-  async function updateCache() {
+  const validator = vscode.workspace.onDidChangeTextDocument(async (e) => {
+    if (e.document.languageId !== "hledger" || e.contentChanges.length === 0) {
+      return;
+    }
+    diagnosticCollection.clear();
     const configuration = vscode.workspace.getConfiguration();
-    const hledgerPath = configuration.get(`hledger.hledgerPath`, "hledger");
-    const ledgerFile = configuration.get(`hledger.ledgerFile`, "");
-    const options = ledgerFile ? ` -f ${ledgerFile} accounts` : " accounts";
-    const command = hledgerPath + options;
 
-    const readAccounts = child_process.exec(command, (error, stdout) => {
-      if (error) {
-        console.log(error);
+    const formatAmounts = configuration.get(
+      "hledger.formatting.formatAmounts",
+      true
+    );
+    const negativesInFrontOfCommodities = configuration.get(
+      "hledger.formatting.negativesInFrontOfCommodities",
+      true
+    );
+
+    const journalOptions: JournalOptions = {
+      formatAmounts: formatAmounts,
+      negativesInFrontOfCommodities: negativesInFrontOfCommodities,
+    };
+
+    const journal = new Journal(e.document, journalOptions);
+    await journal.updateJournal();
+
+    const VALIDATIONS = "hledger.validations.";
+    const validationKeys = [
+      "commodities",
+      "accounts",
+      "ordered_dates",
+      "payees",
+      "tags",
+      "recent_assertions",
+      "unique_leaf_names",
+    ];
+
+    const validationSettings = getValidationSettings(
+      configuration,
+      VALIDATIONS,
+      validationKeys
+    );
+
+    const checkOptions: CheckOptions = {
+      checkCommodities: validationSettings.commodities,
+      checkAccounts: validationSettings.accounts,
+      checkOrderedDates: validationSettings.ordered_dates,
+      checkPayees: validationSettings.payees,
+      checkTags: validationSettings.tags,
+      checkRecentAssertions: validationSettings.recent_assertions,
+      checkUniqueLeafNames: validationSettings.unique_leaf_names,
+    };
+
+    const errors = check(journal, checkOptions);
+    errors.forEach((error) => {
+      const includedDocument = journal.documentsMap.get(error.file.toString());
+      if (!includedDocument) {
         return;
       }
-      state.write(stdout);
-    });
-  }
 
-  context.subscriptions.push(provider, formatter, saveEvent);
+      if (!includedDocument.document) {
+        return;
+      }
+      const startPos = includedDocument.document.positionAt(error.startIndex);
+      const endPos = includedDocument.document.positionAt(error.endIndex);
+      const range = new vscode.Range(startPos, endPos);
+      const diagnostic = new vscode.Diagnostic(
+        range,
+        error.message,
+        error.severity
+      );
+      includedDocument.diagnostics.push(diagnostic);
+    });
+
+    journal.documentsMap.forEach((includedDocument) => {
+      if (!includedDocument.document) {
+        return;
+      }
+      diagnosticCollection.set(
+        includedDocument.document.uri,
+        includedDocument.diagnostics
+      );
+    });
+  });
+
+  const closeDocument = vscode.workspace.onDidCloseTextDocument((doc) =>
+    diagnosticCollection.delete(doc.uri)
+  );
+
+  context.subscriptions.push(formatter, completions, validator, closeDocument);
 }
 
-function stateManager(context: vscode.ExtensionContext) {
-  return {
-    read,
-    write,
-  };
-
-  function read() {
-    const accounts = context.workspaceState.get("accounts");
-    return accounts;
-  }
-
-  async function write(newState: String) {
-    await context.workspaceState.update("accounts", newState);
-  }
+function getValidationSettings(
+  configuration: vscode.WorkspaceConfiguration,
+  validations: string,
+  keys: string[]
+): Record<string, boolean> {
+  const settings: Record<string, boolean> = {};
+  keys.forEach((key) => {
+    settings[key] = configuration.get(`${validations}${key}`, true);
+  });
+  return settings;
 }

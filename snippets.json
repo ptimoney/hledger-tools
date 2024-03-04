@@ -3,9 +3,9 @@
 		"prefix": "transaction",
 		"description": "Add a snippet for a transaction",
 		"body": [
-			"$CURRENT_YEAR-$CURRENT_MONTH-${1:$CURRENT_DATE} ${2:Description}",
-            "\t${3:Account1}       ${4:0.00}",
-            "\t${5:Account2}      -$4",
+			"${1:CURRENT_YEAR}-${2:$CURRENT_MONTH}-${3:$CURRENT_DATE} ${4:Description}",
+            "\t${5:Account1}       ${7:0.00}",
+            "\t${6:Account2}      -$7",
             ""
 		]
 	}

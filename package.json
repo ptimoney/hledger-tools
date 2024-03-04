@@ -1,49 +1,190 @@
 {
   "name": "hledger-tools",
-  "displayName": "hledger-tools",
-  "description": "Tools to support using the PTA tool Hledger in vscode",
+  "displayName": "hledger",
+  "description": "Vscode extension for hledger",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.87.0"
   },
   "repository": {
-		"type": "git",
-		"url": "https://github.com/ptimoney/hledger-tools"
-	},
+    "type": "git",
+    "url": "https://github.com/ptimoney/hledger-tools"
+  },
   "license": "MIT",
   "categories": [
     "Other"
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "languages": [{
-      "id": "hledger",
-      "aliases": ["hledger", "hledger"],
-      "extensions": [".journal"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "hledger",
-      "scopeName": "source.hledger",
-      "path": "./syntaxes/hledger.tmLanguage.json"
-    }],
+    "languages": [
+      {
+        "id": "hledger",
+        "aliases": [
+          "hledger"
+        ],
+        "extensions": [
+          ".journal"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "hledger",
+        "scopeName": "source.hledger",
+        "path": "./syntaxes/hledger.tmLanguage.json"
+      }
+    ],
     "snippets": [
       {
         "language": "hledger",
         "path": "./snippets.json"
       }
-    ],"configuration": [
+    ],
+    "configuration": [
       {
-        "title": "hledger-tools",
+        "title": "Formatting",
+        "id": "formatting",
+        "order": 1,
         "properties": {
-          "hledger.hledgerPath": {
+          "hledger.formatting.alignment": {
+            "order": 3,
             "type": "string",
-            "default": "hledger",
-            "description": "Location of hledger executable"
+            "enum": [
+              "global",
+              "transaction",
+              "both"
+            ],
+            "markdownEnumDescriptions": [
+              "Align with the global offsets set below, if a particular posting cannot fit it will just extend that line",
+              "Align with the other posting lines in the transaction, ignore global settings",
+              "Align first with the global offsets below, if a particular post cannot fit extend all posts in the transaction"
+            ],
+            "enumItemLabels": [
+              "Global Alignment",
+              "Transaction Alignment",
+              "Both"
+            ],
+            "default": "both",
+            "description": "How to align posting lines in transactions"
           },
-          "hledger.ledgerFile": {
-            "type": "string",
-            "description": "Location of LedgerFile Default: $LEDGER_FILE or $HOME/.hledger.journal"
+          "hledger.formatting.formatTransactions": {
+            "type": "boolean",
+            "default": true,
+            "order": 1,
+            "description": "Auto format transaction lines"
+          },
+          "hledger.formatting.formatAmounts": {
+            "type": "boolean",
+            "default": true,
+            "order": 2,
+            "description": "Format amounts to align with declared commodities"
+          },
+          "hledger.formatting.negativesInFrontOfCommodities": {
+            "type": "boolean",
+            "default": false,
+            "order": 2,
+            "description": "display the negative signs in front of the commodities"
+          },
+          "hledger.formatting.formatWhitespace": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Auto format whitespace to remove additional empty lines"
+          },
+          "hledger.formatting.globalAlignments": {
+            "type": "object",
+            "order": 4,
+            "description": "Offsets to align parts of a transaction in global or both alignment modes",
+            "properties": {
+              "postAmountAlignment": {
+                "type": "number"
+              },
+              "costTypeAlignment": {
+                "type": "number"
+              },
+              "costAmountAlignment": {
+                "type": "number"
+              },
+              "assertionTypeAlignment": {
+                "type": "number"
+              },
+              "assertionAmountAlignment": {
+                "type": "number"
+              },
+              "assertionCostTypeAlignment": {
+                "type": "number"
+              },
+              "assertionCostAmountAlignment": {
+                "type": "number"
+              },
+              "commentAlignment": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false,
+            "default": {
+              "postAmountAlignment": 35,
+              "costTypeAlignment": 45,
+              "costAmountAlignment": 55,
+              "assertionTypeAlignment": 65,
+              "assertionAmountAlignment": 75,
+              "assertionCostTypeAlignment": 85,
+              "assertionCostAmountAlignment": 95,
+              "commentAlignment": 105
+            }
+          }
+        }
+      },
+      {
+        "title": "Validation",
+        "id": "validation",
+        "order": 2,
+        "properties": {
+          "hledger.validations": {
+            "type": "object",
+            "order": 1,
+            "description": "Additional validations to include in errors and warnings",
+            "properties": {
+              "commodities": {
+                "type": "boolean",
+                "description": "All commodity symbols used must be declared"
+              },
+              "accounts": {
+                "type": "boolean",
+                "description": "All account names used must be declared"
+              },
+              "ordered_dates": {
+                "type": "boolean",
+                "description": "Within each file, transactions are ordered by date"
+              },
+              "payees": {
+                "type": "boolean",
+                "description": "[TODO] All payees used by transactions must be declared"
+              },
+              "tags": {
+                "type": "boolean",
+                "description": "[TODO] All tags used by transactions must be declared"
+              },
+              "recent_assertions": {
+                "type": "boolean",
+                "description": "[TODO] All accounts with balance assertions must have a balance assertion within the last 7 days before their latest posting"
+              },
+              "unique_leaf_names": {
+                "type": "boolean",
+                "description": "[TODO] No two accounts may have the same leaf name."
+              }
+            },
+            "additionalProperties": false,
+            "default": {
+              "commodities": true,
+              "accounts": true,
+              "ordered_dates": true,
+              "payees": false,
+              "tags": false,
+              "recent_assertions": false,
+              "unique_leaf_names": false
+            }
           }
         }
       }
@@ -54,18 +195,19 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "lint": "eslint src --ext ts"
   },
   "devDependencies": {
-    "@types/vscode": "^1.87.0",
     "@types/mocha": "^10.0.6",
-    "@types/node": "18.x",
+    "@types/node": "^20.11.24",
+    "@types/vscode": "^1.87.0",
+    "ts-node": "^10.9.2",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.9",
     "eslint": "^8.56.0",
     "typescript": "^5.3.3",
-    "@vscode/test-cli": "^0.0.4",
-    "@vscode/test-electron": "^2.3.9"
+    "vscode-textmate": "^9.0.0"
   }
 }
