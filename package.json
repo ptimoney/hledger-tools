@@ -1,0 +1,71 @@
+{
+  "name": "hledger-tools",
+  "displayName": "hledger-tools",
+  "description": "Tools to support using the PTA tool Hledger in vscode",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.87.0"
+  },
+  "repository": {
+		"type": "git",
+		"url": "https://github.com/ptimoney/hledger-tools"
+	},
+  "license": "MIT",
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [{
+      "id": "hledger",
+      "aliases": ["hledger", "hledger"],
+      "extensions": [".journal"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "hledger",
+      "scopeName": "source.hledger",
+      "path": "./syntaxes/hledger.tmLanguage.json"
+    }],
+    "snippets": [
+      {
+        "language": "hledger",
+        "path": "./snippets.json"
+      }
+    ],"configuration": [
+      {
+        "title": "hledger-tools",
+        "properties": {
+          "hledger.hledgerPath": {
+            "type": "string",
+            "default": "hledger",
+            "description": "Location of hledger executable"
+          },
+          "hledger.ledgerFile": {
+            "type": "string",
+            "description": "Location of LedgerFile Default: $LEDGER_FILE or $HOME/.hledger.journal"
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.87.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}

@@ -1,0 +1,12 @@
+{
+	"Transaction": {
+		"prefix": "transaction",
+		"description": "Add a snippet for a transaction",
+		"body": [
+			"$CURRENT_YEAR-$CURRENT_MONTH-${1:$CURRENT_DATE} ${2:Description}",
+            "\t${3:Account1}       ${4:0.00}",
+            "\t${5:Account2}      -$4",
+            ""
+		]
+	}
+}
