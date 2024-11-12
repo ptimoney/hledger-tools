@@ -1,0 +1,6 @@
+alias OLD = NEW
+alias OLD = NEW ; not a comment, part of the account name
+alias checking = assets:bank:wells fargo:checking
+alias /REGEX/ = REPLACEMENT
+alias /^(.+):bank:([^:]+)(.*)/ = \1:\2 \3
+end aliases

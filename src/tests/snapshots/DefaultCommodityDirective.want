@@ -1,0 +1,20 @@
+# commodity-less amounts should be treated as dollars
+^ ["comment.block"]
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ["comment.block"]
+# (and displayed with symbol on the left, thousands separators and two decimal places)
+^ ["comment.block"]
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ["comment.block"]
+D $1,000.00
+^ ["keyword.other.defaultcommodity"]
+  ^ ["constant.other.currency"]
+   ^^^^^^^^ ["constant.numeric.amount"]
+
+1/1
+^^^ ["constant.other.date"]
+  a     5    ; <- commodity-less amount, becomes $1
+  ^^ ["variable.other.account"]
+        ^ ["constant.numeric.amount"]
+             ^ ["comment.line"]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ["comment.line"]
+  b
+  ^^ ["variable.other.account"]

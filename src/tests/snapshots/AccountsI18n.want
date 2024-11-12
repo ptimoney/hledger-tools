@@ -1,0 +1,12 @@
+2010/01/02 Norwegian Salary
+^^^^^^^^^^ ["constant.other.date"]
+           ^^^^^^^^^^^^^^^^^ ["constant.string.desc"]
+  Inntekter:Lønn       -1000 NOK
+  ^^^^^^^^^^^^^^^ ["variable.other.account"]
+                       ^ ["invalid"]
+                        ^^^^ ["constant.numeric.amount"]
+                             ^^^ ["constant.other.currency"]
+  Assets:Skandiabanken  1000 NOK
+  ^^^^^^^^^^^^^^^^^^^^^ ["variable.other.account"]
+                        ^^^^ ["constant.numeric.amount"]
+                             ^^^ ["constant.other.currency"]

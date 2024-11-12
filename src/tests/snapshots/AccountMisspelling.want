@@ -1,0 +1,10 @@
+2020-02-02 Misspelling
+^^^^^^^^^^ ["constant.other.date"]
+           ^^^^^^^^^^^^ ["constant.string.desc"]
+  AAssets:Bank  -100
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                ^ ["invalid"]
+                 ^^^ ["constant.numeric.amount"]
+  EExpenses:Food  100
+  ^^^^^^^^^^^^^^^ ["variable.other.account"]
+                  ^^^ ["constant.numeric.amount"]

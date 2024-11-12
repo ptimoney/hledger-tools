@@ -1,0 +1,817 @@
+2010/01/02 Foo
+^^^^^^^^^^ ["constant.other.date"]
+           ^^^^ ["constant.string.desc"]
+  Income:Foo      -1 USD
+  ^^^^^^^^^^^ ["variable.other.account"]
+                  ^ ["invalid"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1NZD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                    ^^^ ["constant.other.currency"]
+  Expenses:Bar     $1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.other.currency"]
+                    ^ ["constant.numeric.amount"]
+  Expenses:Bar     £1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.other.currency"]
+                    ^ ["constant.numeric.amount"]
+  Expenses:Bar     ¥1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.other.currency"]
+                    ^ ["constant.numeric.amount"]
+  Expenses:Bar     ฿1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ¢1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.other.currency"]
+                    ^ ["constant.numeric.amount"]
+  Expenses:Bar     ₡1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₢1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₣1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₤1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₥1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₦1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₧1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₨1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₩1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₪1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₫1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     €1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.other.currency"]
+                    ^ ["constant.numeric.amount"]
+  Expenses:Bar     ₭1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₮1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₯1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ¤1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                    ^^ ["variable.other.account"]
+  Expenses:Bar     ₠ 1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                     ^ ["constant.numeric.amount"]
+  Expenses:Bar     ₰ 1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                     ^ ["constant.numeric.amount"]
+  Expenses:Bar     ₱ 1
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                     ^ ["constant.numeric.amount"]
+  Expenses:Bar     1 AED
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 AFN
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 ALL
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 AMD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 ANG
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 AOA
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 ARS
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 AUD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 AWG
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 AZN
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BAM
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BBD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BDT
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BGN
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BHD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BIF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BMD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BND
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BOB
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BOV
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BRL
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BSD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BTN
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BWP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BYR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 BZD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CAD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CDF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CHE
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CHF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CHW
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CLF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CLP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CNY
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 COP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 COU
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CRC
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CUC
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CUP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CVE
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 CZK
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 DJF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 DKK
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 DOP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 DZD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 EGP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 ERN
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 ETB
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 EUR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 FJD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 FKP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 GBP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 GEL
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 GHS
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 GIP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 GMD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 GNF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 GTQ
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 GYD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 HKD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 HNL
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 HRK
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 HTG
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 HUF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 IDR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 ILS
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 INR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 IQD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 IRR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 ISK
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 JMD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 JOD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 JPY
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 KES
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 KGS
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 KHR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 KMF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 KPW
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 KRW
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 KWD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 KYD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 KZT
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 LAK
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 LBP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 LKR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 LRD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 LSL
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 LTL
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 LVL
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 LYD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MAD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MDL
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MGA
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MKD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MMK
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MNT
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MOP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MRO
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MUR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MVR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MWK
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MXN
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MXV
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MYR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 MZN
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 NAD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 NGN
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 NIO
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 NOK
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 NPR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 NZD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 OMR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 PAB
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 PEN
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 PGK
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 PHP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 PKR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 PLN
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 PYG
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 QAR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 RON
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 RSD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 RUB
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 RWF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SAR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SBD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SCR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SDG
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SEK
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SGD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SHP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SLL
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SOS
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SRD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SSP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 STD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SVC
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SYP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 SZL
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 THB
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 TJS
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 TMT
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 TND
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 TOP
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 TRY
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 TTD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 TWD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 TZS
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 UAH
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 UGX
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 USD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 USN
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 USS
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 UYI
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 UYU
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 UZS
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 VEF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 VND
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 VUV
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 WST
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XAF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XAG
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XAU
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XBA
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XBB
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XBC
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XBD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XCD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XDR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XFU
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XOF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XPD
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XPF
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XPT
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XSU
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XTS
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XUA
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 XXX
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 YER
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 ZAR
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 ZMK
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
+  Expenses:Bar     1 ZWL
+  ^^^^^^^^^^^^^ ["variable.other.account"]
+                   ^ ["constant.numeric.amount"]
+                     ^^^ ["constant.other.currency"]
