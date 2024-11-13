@@ -18,5 +18,8 @@
         "tmgrammar",
         "uniqueleafnames",
         "vsctm"
+    ],
+    "cSpell.ignoreWords": [
+        "mhansen"
     ]
 }

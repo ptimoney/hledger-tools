@@ -9,16 +9,25 @@
       "include": "#keywords"
     },
     {
-      "include": "#accountaliasdirective"
+      "include": "#accountAliasDirective"
     },
     {
-      "include": "#accountdirective"
+      "include": "#accountDirective"
     },
     {
-      "include": "#commoditydirective"
+      "include": "#commodityDirective"
     },
     {
-      "include": "#defaultcommoditydirective"
+      "include": "#decimalDirective"
+    },
+    {
+      "include": "#payeeDirective"
+    },
+    {
+      "include": "#tagDirective"
+    },
+    {
+      "include": "#defaultCommodityDirective"
     },
     {
       "include": "#transaction"
@@ -26,25 +35,46 @@
   ],
   "repository": {
     "transaction": {
-      "begin": "^((\\d{4}[-/.])?\\d{1,2}[-/.]\\d{1,2})(=((\\d{4}[-/.])?\\d{1,2}[-/.]\\d{1,2}))?( +([^;]+))?",
+      "begin": "^((?:\\d{2,4}[-\\/.])?\\d{1,2}[-\\/.]\\d{1,2})(?: ([!*]))?(?: (\\([^;\\n()]+\\)))?(?: ([^;\\n]+))?",
       "beginCaptures": {
         "1": { "name": "constant.other.date" },
-        "4": { "name": "constant.other.date" },
-        "7": { "name": "constant.string.desc" }
+        "2": { "name": "invalid.status" },
+        "3": { "name": "variable.other.tag" },
+        "4": { "name": "constant.string.desc" }
       },
       "while": "^[ \\t]+",
       "patterns": [
-        { "include": "#accountnames" },
+        { "include": "#accountNames" },
         { "include": "#transactionAmount" },
         { "include": "#comments" }
       ]
     },
-    "accountnames": {
+    "accountNames": {
       "patterns": [
         {
           "match": "((?:[\\[\\]\\w:\\&_-]+\\s?[\\[\\]\\w:\\&_-]*)+)",
           "captures": {
             "1": { "name": "variable.other.account" }
+          }
+        }
+      ]
+    },
+    "payeeNames": {
+      "patterns": [
+        {
+          "match": "((?:[\\[\\]\\w:\\&_-]+\\s?[\\[\\]\\w:\\&_-]*)+)",
+          "captures": {
+            "1": { "name": "variable.other.payee" }
+          }
+        }
+      ]
+    },
+    "tagNames": {
+      "patterns": [
+        {
+          "match": "((?:[\\[\\]\\w:\\&_-]+\\s?[\\[\\]\\w:\\&_-]*)+)",
+          "captures": {
+            "1": { "name": "variable.other.tag" }
           }
         }
       ]
@@ -152,19 +182,19 @@
         }
       ]
     },
-    "accountaliasdirective": {
+    "accountAliasDirective": {
       "patterns": [
         {
           "match": "^(alias)\\s+(.*)=(.*)$",
           "captures": {
-            "1": { "name": "keyword.other.accountalias" },
+            "1": { "name": "keyword.other.accountAlias" },
             "2": { "name": "variable.other.account" },
             "3": { "name": "variable.other.account" }
           }
         }
       ]
     },
-    "accountdirective": {
+    "accountDirective": {
       "patterns": [
         {
           "begin": "^(account)\\b",
@@ -173,13 +203,13 @@
           },
           "end": "$",
           "patterns": [
-            { "include": "#accountnames" },
+            { "include": "#accountNames" },
             { "include": "#comments" }
           ]
         }
       ]
     },
-    "commoditydirective": {
+    "commodityDirective": {
       "patterns": [
         {
           "begin": "^(commodity)\\b",
@@ -194,13 +224,49 @@
         }
       ]
     },
-    "defaultcommoditydirective": {
+    "decimalDirective": {
+      "patterns": [
+        {
+          "begin": "^(decimal-mark)\\b",
+          "end": "$",
+          "beginCaptures": {
+            "1": { "name": "keyword.other.decimalMark" }
+          },
+          "patterns": [{ "include": "#comments" }]
+        }
+      ]
+    },
+    "payeeDirective": {
+      "patterns": [
+        {
+          "begin": "^(payee)\\b",
+          "end": "$",
+          "beginCaptures": {
+            "1": { "name": "keyword.other.payee" }
+          },
+          "patterns": [{ "include": "#comments" }, { "include": "#payeeNames" }]
+        }
+      ]
+    },
+    "tagDirective": {
+      "patterns": [
+        {
+          "begin": "^(tag)\\b",
+          "end": "$",
+          "beginCaptures": {
+            "1": { "name": "keyword.other.tag" }
+          },
+          "patterns": [{ "include": "#comments" }, { "include": "#tagNames" }]
+        }
+      ]
+    },
+    "defaultCommodityDirective": {
       "patterns": [
         {
           "begin": "^(D)\\b",
           "end": "$",
           "beginCaptures": {
-            "1": { "name": "keyword.other.defaultcommodity" }
+            "1": { "name": "keyword.other.defaultCommodity" }
           },
           "patterns": [
             { "include": "#transactionAmount" },
@@ -216,19 +282,19 @@
           "match": "^include\\b"
         },
         {
-          "name": "keyword.other.defaultyear",
+          "name": "keyword.other.defaultYear",
           "match": "^Y\\d{4}\\b"
         },
         {
-          "name": "keyword.other.applyaccount",
+          "name": "keyword.other.applyAccount",
           "match": "^apply account\\b"
         },
         {
-          "name": "keyword.other.endapplyaccount",
+          "name": "keyword.other.endApplyAccount",
           "match": "^end apply account"
         },
         {
-          "name": "keyword.other.endaccountaliases",
+          "name": "keyword.other.endAccountAliases",
           "match": "^end aliases"
         }
       ]

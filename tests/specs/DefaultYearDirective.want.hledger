@@ -1,6 +1,6 @@
 ; SYNTAX TEST "source.hledger" "DefaultYearDirective"
 Y2009      ; set default year to 2009
-;^^^^ keyword.other.defaultyear
+;^^^^ keyword.other.defaultYear
 ;          ^ comment.line
 ;           ^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
 
@@ -16,7 +16,7 @@ Y2009      ; set default year to 2009
 ; ^^^^^^^ variable.other.account
 
 Y2010      ; change default year to 2010
-;^^^^ keyword.other.defaultyear
+;^^^^ keyword.other.defaultYear
 ;          ^ comment.line
 ;           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
 

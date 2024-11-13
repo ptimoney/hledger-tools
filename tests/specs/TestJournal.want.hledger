@@ -255,7 +255,7 @@ P 2024-03-01 AAPL $179  ; Declare a market price for AAPL in $ on this date.
 
 2024-01-02 ! (12345) pay rent
 ;^^^^^^^^^ constant.other.date
-;          ^^^^^^^^^^^^^^^^^^^ constant.string.desc
+;                    ^^^^^^^^ constant.string.desc
     ; Additional transaction comment lines, indented.
 ;   ^ comment.line
 ;    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line

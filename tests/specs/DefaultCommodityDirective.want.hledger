@@ -6,7 +6,7 @@
 ; comment.block
 ;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
 D $1,000.00
-;<- keyword.other.defaultcommodity
+;<- keyword.other.defaultCommodity
 ; ^ constant.other.currency
 ;  ^^^^^^^^ constant.numeric.amount
 
