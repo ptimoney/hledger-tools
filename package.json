@@ -2,7 +2,7 @@
   "name": "hledger-tools",
   "displayName": "hledger",
   "description": "Vscode extension for hledger",
-  "publisher": "ptimoney",
+  "publisher": "patrickt",
   "icon": "images/icon.png",
   "version": "0.0.1",
   "engines": {
