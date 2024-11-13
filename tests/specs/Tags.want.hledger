@@ -1,0 +1,36 @@
+; SYNTAX TEST "source.hledger" "Tags"
+2017/1/16 bought groceries    ; sometag:
+;^^^^^^^^ constant.other.date
+;         ^^^^^^^^^^^^^^^^^^^^ constant.string.desc
+;                             ^ comment.line
+;                              ^ comment.line
+;                               ^^^^^^^^^ comment.line comment.block
+    expenses:food    $10   ; a-posting-tag: the tag value
+;   ^^^^^^^^^^^^^^ variable.other.account
+;                    ^ constant.other.currency
+;                     ^^ constant.numeric.amount
+;                          ^ comment.line
+;                           ^ comment.line
+;                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line comment.block
+    assets:checking       ; a comment containing tag1:, tag2: some value ...
+;   ^^^^^^^^^^^^^^^^ variable.other.account
+;                         ^ comment.line
+;                          ^^^^^^^^^^^^^^^^^^^^^^ comment.line
+;                                                ^^^^^ comment.line comment.block
+;                                                     ^^ comment.line
+;                                                       ^^^^^^^^^^^^^^^^^^^^^ comment.line comment.block
+
+2010/01/01 foo ; tag:a-b-c
+;^^^^^^^^^ constant.other.date
+;          ^^^^ constant.string.desc
+;              ^^^^^^^^^^^^ comment.line
+2010/01/01 foo # tag:a-b-c
+;^^^^^^^^^ constant.other.date
+;          ^^^^^^^^^^^^^^^^ constant.string.desc
+
+; tag:a-b-c
+; ^^^^^^^^^^ comment.block
+# tag:a-b-c
+; ^^^^^^^^^^ comment.block
+* tag:a-b-c
+; ^^^^^^^^^^ comment.block

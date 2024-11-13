@@ -1,6 +1,0 @@
-; This is a comment, containing income:salary, and expenses:food
-^ ["comment.block"]
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ["comment.block"]
-                                ^^^^^^^^^^^^^ ["comment.block","comment.block"]
-                                             ^^^^^^ ["comment.block"]
-                                                   ^^^^^^^^^^^^^^ ["comment.block","comment.block"]

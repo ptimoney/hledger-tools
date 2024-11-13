@@ -3,18 +3,54 @@
 {
 	"version": "2.0.0",
 	"tasks": [
-		{
-			"type": "npm",
-			"script": "watch",
-			"problemMatcher": "$tsc-watch",
-			"isBackground": true,
-			"presentation": {
-				"reveal": "never"
-			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
-		}
-	]
+        {
+            "type": "npm",
+            "script": "watch",
+            "problemMatcher": "$tsc-watch",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "never"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "update snapshots",
+            "type": "shell",
+            "command": "node out/tests/main.js",
+            "problemMatcher": []
+        },
+        {
+            "label": "tmTests",
+            "type": "shell",
+            "command": "vscode-tmgrammar-test -c -g syntaxes/hledger.tmLanguage.json 'tests/specs/*.want.hledger'",
+            "group": "test",
+            "presentation": {
+                "revealProblems": "onProblem",
+                "panel": "new",
+                "showReuseMessage": true,
+                "reveal": "silent",
+            },
+            "problemMatcher": {
+                "owner": "vscode-tmgrammar-test",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^(ERROR)\\s([^:]+):(\\d+):(\\d+):(\\d+)\\s(.*)$",
+                        "severity": 1,
+                        "file": 2,
+                        "line": 3,
+                        "column": 4,
+                        "endColumn": 5,
+                        "message": 6
+                    }
+                ]
+            }
+        }
+    ]
 }

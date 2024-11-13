@@ -1,8 +1,0 @@
-1/31
-^^^^ ["constant.other.date"]
-1.31
-^^^^ ["constant.other.date"]
-1-31
-^^^^ ["constant.other.date"]
- 1-31
- ^^^^^ ["variable.other.account"]

@@ -1,0 +1,435 @@
+; SYNTAX TEST "source.hledger" "TestJournal"
+# Here is the main syntax of hledger's journal format
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+# (omitting extra Ledger compatibility syntax).
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+
+###############################################################################
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+
+# 1. These are comment lines, for notes or temporarily disabling things.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+; They begin with # or ;
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+
+comment
+;^^^^^^^ comment.block
+Or, lines can be enclosed within "comment" / "end comment".
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+This is a block of 
+;^^^^^^^^^^^^^^^^^^^ comment.block
+commented lines.
+;^^^^^^^^^^^^^^^^ comment.block
+end comment
+;^^^^^^^^^^^ comment.block
+
+# Some journal entries can have semicolon comments at end of line  ; like this
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+# Some of them require 2 or more spaces before the semicolon.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+
+###############################################################################
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+
+# 2. Directives customise processing or output in some way.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+# You don't need any directives to get started.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+# But they can add more error checking, or change how things are displayed.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+# They begin with a word, letter, or symbol. 
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+# They are most often placed at the top, before transactions.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+
+account assets             ; Declare valid account names and display order.
+;^^^^^^ keyword.other.account
+;       ^^^^^^^ variable.other.account
+;                          ^ comment.line
+;                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+account assets:savings     ; A subaccount. This one represents a bank account.
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^^^ variable.other.account
+;                          ^ comment.line
+;                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+account assets:checking    ; Another. Note, 2+ spaces after the account name.
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^^^^ variable.other.account
+;                          ^ comment.line
+;                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+account assets:receivable  ; Accounting type is inferred from english names,
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^^^^^^ variable.other.account
+;                          ^ comment.line
+;                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+account passifs            ; or declared with a "type" tag, type:L
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^ variable.other.account
+;                          ^ comment.line
+;                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+;                                                           ^^^^^^^ comment.line comment.block
+account expenses           ; type:X
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^ variable.other.account
+;                          ^ comment.line
+;                           ^ comment.line
+;                            ^^^^^^^ comment.line comment.block
+                           ; A follow-on comment line, indented.
+;                          ^ comment.line
+;                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+account expenses:rent      ; Expense and revenue categories are also accounts.
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^^ variable.other.account
+;                          ^ comment.line
+;                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+                           ; Subaccounts inherit their parent's type.
+;                          ^ comment.line
+;                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+account liabilities:credit card
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^^^^^^^^^^^ variable.other.account
+account equity:start
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^ variable.other.account
+account expenses:wands
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^^^ variable.other.account
+account expenses:clothing
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^^^^^^ variable.other.account
+account assets:pouch
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^ variable.other.account
+account assets:bank:gold
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^^^^^ variable.other.account
+account revenues:gifts
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^^^ variable.other.account
+account assets:investments:2024-01-15
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ variable.other.account
+account assets:investments:2024-01-15-02
+;^^^^^^ keyword.other.account
+;       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ variable.other.account
+
+commodity $0.00         ; Declare valid commodities and their display styles.
+;^^^^^^^^ keyword.other.commodity
+;         ^ constant.other.currency
+;          ^^^^ constant.numeric.amount
+;                       ^ comment.line
+;                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+commodity 1.000,00 EUR
+;^^^^^^^^ keyword.other.commodity
+;         ^^^^^^^^ constant.numeric.amount
+;                  ^^^ constant.other.currency
+commodity 0. gold
+;^^^^^^^^ keyword.other.commodity
+;         ^^ constant.numeric.amount
+;            ^^^^ constant.other.currency
+commodity 0 "Chocolate Frogs"
+;^^^^^^^^ keyword.other.commodity
+;         ^ constant.numeric.amount
+;           ^^^^^^^^^^^^^^^^^ constant.other.currency
+commodity 0 AAAA
+;^^^^^^^^ keyword.other.commodity
+;         ^ constant.numeric.amount
+;           ^^^^ constant.other.currency
+
+decimal-mark .          ; The decimal mark used in this file (if ambiguous).
+;                       ^ comment.line
+;                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+
+payee Whole Foods       ; Declare a valid payee name.
+;                       ^ comment.line
+;                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+
+tag trip                ; Declare a valid tag name.
+;                       ^ comment.line
+;                        ^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+
+P 2024-03-01 AAPL $179  ; Declare a market price for AAPL in $ on this date.
+;                       ^ comment.line
+;                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+
+# Declare a recurring "periodic transaction", for budget/forecast reports
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+~ monthly  set budget goals  ; <- Note, 2+ spaces before the description.
+;                            ^ comment.line
+;                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    (expenses:rent)      $1000
+    (expenses:food)       $500
+
+# Declare an auto posting rule, to modify existing transactions in reports
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+= revenues:consulting
+    liabilities:tax:2024:us          *0.25  ; Add a tax liability & expense
+;                                           ^ comment.line
+;                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    expenses:tax:2024:us            *-0.25  ; for 25% of the revenue.
+;                                           ^ comment.line
+;                                            ^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+
+###############################################################################
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+
+# 3. Transactions are what it's all about.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+# They are dated events, usually movements of money between 2 or more accounts.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+# They begin with a numeric date.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+# Here is their basic shape:
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+#
+; comment.block
+# DATE DESCRIPTION    ; The transaction's date and optional description.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+#   ACCOUNT1  AMOUNT  ; A posting of an amount to/from this account, indented.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+#   ACCOUNT2  AMOUNT  ; A second posting, balancing the first.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+#   ...               ; More if needed. Amounts must sum to zero.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+#                     ; Note, 2+ spaces between account names and amounts.
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+
+2024-01-01 opening balances         ; At the start, declare pre-existing balances this way.
+;^^^^^^^^^ constant.other.date
+;          ^^^^^^^^^^^^^^^^^^^^^^^^^ constant.string.desc
+;                                   ^ comment.line
+;                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    assets:savings         $ 10000.00 ; Account names can be anything. lower case is easy to type.
+;   ^^^^^^^^^^^^^^^ variable.other.account
+;                          ^ constant.other.currency
+;                            ^^^^^^^^ constant.numeric.amount
+;                                     ^ comment.line
+;                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    assets:checking         $ 1000.00 ; assets, liabilities, equity, revenues, expenses are common.
+;   ^^^^^^^^^^^^^^^^ variable.other.account
+;                           ^ constant.other.currency
+;                             ^^^^^^^ constant.numeric.amount
+;                                     ^ comment.line
+;                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    liabilities:credit card  $-500.00 ; liabilities, equity, revenues balances are usually negative.
+;   ^^^^^^^^^^^^^^^^^^^^^^^ variable.other.account
+;                            ^ constant.other.currency
+;                             ^ invalid
+;                              ^^^^^^ constant.numeric.amount
+;                                     ^ comment.line
+;                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    equity:start                      ; One amount can be left blank. $-10500 is inferred here.
+;   ^^^^^^^^^^^^^ variable.other.account
+;                                     ^ comment.line
+;                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+                                      ; Some of these accounts we didn't declare above,
+;                                     ^ comment.line
+;                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+                                      ; so -s/--strict would complain.
+;                                     ^ comment.line
+;                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+
+2024-01-02 ! (12345) pay rent
+;^^^^^^^^^ constant.other.date
+;          ^^^^^^^^^^^^^^^^^^^ constant.string.desc
+    ; Additional transaction comment lines, indented.
+;   ^ comment.line
+;    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    ; There can be a ! or * after the date meaning "pending" or "cleared".
+;   ^ comment.line
+;    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    ; There can be a parenthesised (code) after the date/status.
+;   ^ comment.line
+;    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+                                    ; Amounts' sign shows direction of flow.
+;                                   ^ comment.line
+;                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    assets:checking  $-500.00 ; Minus means removed from this account (credit).
+;   ^^^^^^^^^^^^^^^^ variable.other.account
+;                    ^ constant.other.currency
+;                     ^ invalid
+;                      ^^^^^^ constant.numeric.amount
+;                             ^ comment.line
+;                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    expenses:rent    $ 500.00 ; Plus means added to this account (debit).
+;   ^^^^^^^^^^^^^^ variable.other.account
+;                    ^ constant.other.currency
+;                      ^^^^^^ constant.numeric.amount
+;                             ^ comment.line
+;                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+
+; Keeping transactions in date order is optional (but helps error checking).
+; comment.block
+;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
+
+2024-01-02 Gringott's Bank | withdrawal  ; Description can be PAYEE | NOTE
+;^^^^^^^^^ constant.other.date
+;          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ constant.string.desc
+;                                        ^ comment.line
+;                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    assets:bank:gold  -10 gold
+;   ^^^^^^^^^^^^^^^^^ variable.other.account
+;                     ^ invalid
+;                      ^^ constant.numeric.amount
+;                         ^^^^ constant.other.currency
+    assets:pouch       10 gold
+;   ^^^^^^^^^^^^^ variable.other.account
+;                      ^^ constant.numeric.amount
+;                         ^^^^ constant.other.currency
+
+2024-01-02 shopping
+;^^^^^^^^^ constant.other.date
+;          ^^^^^^^^^ constant.string.desc
+    expenses:clothing   1 gold
+;   ^^^^^^^^^^^^^^^^^^ variable.other.account
+;                       ^ constant.numeric.amount
+;                         ^^^^ constant.other.currency
+    expenses:wands      5 gold
+;   ^^^^^^^^^^^^^^^ variable.other.account
+;                       ^ constant.numeric.amount
+;                         ^^^^ constant.other.currency
+    assets:pouch       -6 gold
+;   ^^^^^^^^^^^^^ variable.other.account
+;                      ^ invalid
+;                       ^ constant.numeric.amount
+;                         ^^^^ constant.other.currency
+
+2024-01-02 receive gift
+;^^^^^^^^^ constant.other.date
+;          ^^^^^^^^^^^^^ constant.string.desc
+    revenues:gifts  -3 "Chocolate Frogs"
+;   ^^^^^^^^^^^^^^^ variable.other.account
+;                   ^ invalid
+;                    ^ constant.numeric.amount
+;                      ^^^^^^^^^^^^^^^^^ constant.other.currency
+    assets:pouch     3 "Chocolate Frogs"
+;   ^^^^^^^^^^^^^ variable.other.account
+;                    ^ constant.numeric.amount
+;                      ^^^^^^^^^^^^^^^^^ constant.other.currency
+
+2024-01-15 buy some shares, in two lots                 ; Cost can be noted.
+;^^^^^^^^^ constant.other.date
+;          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ constant.string.desc
+;                                                       ^ comment.line
+;                                                        ^^^^^^^^^^^^^^^^^^^ comment.line
+    assets:investments:2024-01-15      2.0 AAAA @  $ 1.50 ; @  means per-unit cost
+;   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ variable.other.account
+;                                      ^^^ constant.numeric.amount
+;                                          ^^^^ constant.other.currency
+;                                                  ^ constant.other.currency
+;                                                    ^^^^ constant.numeric.amount
+;                                                         ^ comment.line
+;                                                          ^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    assets:investments:2024-01-15-02   3.0 AAAA @@ $ 4.00 ; @@ means total cost
+;   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ variable.other.account
+;                                      ^^^ constant.numeric.amount
+;                                          ^^^^ constant.other.currency
+;                                                  ^ constant.other.currency
+;                                                    ^^^^ constant.numeric.amount
+;                                                         ^ comment.line
+;                                                          ^^^^^^^^^^^^^^^^^^^^ comment.line
+                                                          ; ^ Per-lot subaccounts are sometimes useful.
+;                                                         ^ comment.line
+;                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    assets:checking                  $-7.00
+;   ^^^^^^^^^^^^^^^^ variable.other.account
+;                                    ^ constant.other.currency
+;                                     ^ invalid
+;                                      ^^^^ constant.numeric.amount
+
+2024-01-15 assert some account balances on this date
+;^^^^^^^^^ constant.other.date
+;          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ constant.string.desc
+    ; Balances can be asserted in any transaction, with =, for extra error checking.
+;   ^ comment.line
+;    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    ; Assertion txns like this one can be made with hledger close --assert --show-costs
+;   ^ comment.line
+;    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+    ;
+;   ^ comment.line
+    assets:savings                   $ 0.00                = $ 10000.00
+;   ^^^^^^^^^^^^^^^ variable.other.account
+;                                    ^ constant.other.currency
+;                                      ^^^^ constant.numeric.amount
+;                                                            ^ constant.other.currency
+;                                                              ^^^^^^^^ constant.numeric.amount
+    assets:checking                  $ 0.00                =   $ 493.00
+;   ^^^^^^^^^^^^^^^^ variable.other.account
+;                                    ^ constant.other.currency
+;                                      ^^^^ constant.numeric.amount
+;                                                              ^ constant.other.currency
+;                                                                ^^^^^^ constant.numeric.amount
+    assets:bank:gold                   0 gold              =     -10 gold
+;   ^^^^^^^^^^^^^^^^^ variable.other.account
+;                                      ^ constant.numeric.amount
+;                                        ^^^^ constant.other.currency
+;                                                                ^ invalid
+;                                                                 ^^ constant.numeric.amount
+;                                                                    ^^^^ constant.other.currency
+    assets:pouch                       0 gold              =       4 gold
+;   ^^^^^^^^^^^^^ variable.other.account
+;                                      ^ constant.numeric.amount
+;                                        ^^^^ constant.other.currency
+;                                                                  ^ constant.numeric.amount
+;                                                                    ^^^^ constant.other.currency
+    assets:pouch                       0 "Chocolate Frogs" =       3 "Chocolate Frogs"
+;   ^^^^^^^^^^^^^ variable.other.account
+;                                      ^ constant.numeric.amount
+;                                        ^^^^^^^^^^^^^^^^^ constant.other.currency
+;                                                                  ^ constant.numeric.amount
+;                                                                    ^^^^^^^^^^^^^^^^^ constant.other.currency
+    assets:investments:2024-01-15      0.0 AAAA            =       2.0 AAAA            @  $ 1.50
+;   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ variable.other.account
+;                                      ^^^ constant.numeric.amount
+;                                          ^^^^ constant.other.currency
+;                                                                  ^^^ constant.numeric.amount
+;                                                                      ^^^^ constant.other.currency
+;                                                                                         ^ constant.other.currency
+;                                                                                           ^^^^ constant.numeric.amount
+    assets:investments:2024-01-15-02   0.0 AAAA            =       3.0 AAAA            @@ $ 4.00
+;   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ variable.other.account
+;                                      ^^^ constant.numeric.amount
+;                                          ^^^^ constant.other.currency
+;                                                                  ^^^ constant.numeric.amount
+;                                                                      ^^^^ constant.other.currency
+;                                                                                         ^ constant.other.currency
+;                                                                                           ^^^^ constant.numeric.amount
+    liabilities:credit card          $ 0.00                =   $-500.00
+;   ^^^^^^^^^^^^^^^^^^^^^^^ variable.other.account
+;                                    ^ constant.other.currency
+;                                      ^^^^ constant.numeric.amount
+;                                                              ^ constant.other.currency
+;                                                               ^ invalid
+;                                                                ^^^^^^ constant.numeric.amount
+
+2024-02-01 note some event, or a transaction not yet fully entered, on this date
+;^^^^^^^^^ constant.other.date
+;          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ constant.string.desc
+    ; Postings are not required.
+;   ^ comment.line
+;    ^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line

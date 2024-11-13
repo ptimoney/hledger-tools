@@ -1,0 +1,4 @@
+; SYNTAX TEST "source.hledger" "CurrencyInDesc"
+2010/01/02 FRAUD AUD AUDOLLAR
+;^^^^^^^^^ constant.other.date
+;          ^^^^^^^^^^^^^^^^^^^ constant.string.desc

@@ -1,0 +1,14 @@
+; SYNTAX TEST "source.hledger" "AccountWithSpacesInvalid"
+2010-01-01 Invalid Too Many Spaces
+;^^^^^^^^^ constant.other.date
+;          ^^^^^^^^^^^^^^^^^^^^^^^^ constant.string.desc
+  Account With  Too   Many   Spaces  10
+; ^^^^^^^^^^^^ variable.other.account
+;               ^^^^ variable.other.account
+;                     ^^^^^ variable.other.account
+;                            ^^^^^^^ variable.other.account
+;                                    ^^ constant.numeric.amount
+  IncomeWithNoSpaces  -10
+; ^^^^^^^^^^^^^^^^^^^ variable.other.account
+;                     ^ invalid
+;                      ^^ constant.numeric.amount
