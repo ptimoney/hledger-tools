@@ -3,7 +3,7 @@
 ;^^^^^^^^^ constant.other.date
 ;          ^^^^^^^^^^^^^^^^^^^^^^^^^^ constant.string.desc
   Expenses:Foo:  1
-; ^^^^^^^^^^^^^^ variable.other.account
+; ^^^^^^^^^^^^^ variable.other.account
 ;                ^ constant.numeric.amount
   Income:Salary:
-; ^^^^^^^^^^^^^^^ variable.other.account
+; ^^^^^^^^^^^^^^ variable.other.account

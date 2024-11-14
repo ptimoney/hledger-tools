@@ -199,7 +199,7 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "npm run test:tmTest",
-    "test:tmTest": "vscode-tmgrammar-test -c -g syntaxes/hledger.tmLanguage.json 'tests/*.hledger'"
+    "test:tmTest": "vscode-tmgrammar-test -c -g syntaxes/hledger.tmLanguage.json 'tests/specs/*.want.hledger'"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
@@ -214,6 +214,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.0",
     "vscode-oniguruma": "^1.5.1",
-    "vscode-textmate": "^9.0.0"
+    "vscode-textmate": "^9.0.0",
+    "vscode-tmgrammar-test": "^0.1.3"
   }
 }
