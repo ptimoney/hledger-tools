@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { escapeRegex } from "./utils";
+import * as path from "path";
 
 export enum AlignmentType {
   global = "global",
@@ -85,8 +86,9 @@ export class Journal {
 
         for await (const includeMatch of includeMatches) {
           const includeRelativeFilePath = includeMatch[1];
-          const thisFileLocation = vscode.workspace.getWorkspaceFolder(
-            includedDocument.document.uri
+
+          const thisFileLocation = path.dirname(
+            includedDocument.document.uri.fsPath
           );
           if (!thisFileLocation) {
             continue;
@@ -94,9 +96,8 @@ export class Journal {
           const includeUri =
             includeRelativeFilePath[0] === "/"
               ? vscode.Uri.file(includeRelativeFilePath)
-              : vscode.Uri.joinPath(
-                  thisFileLocation.uri,
-                  includeRelativeFilePath
+              : vscode.Uri.parse(
+                  path.join(thisFileLocation, includeRelativeFilePath)
                 );
 
           if (this.documentsMap.has(includeUri.toString())) {
