@@ -4,7 +4,7 @@ import * as path from "path";
 import * as vsctm from "vscode-textmate/release/main";
 import * as oniguruma from "vscode-oniguruma";
 
-const basePath = "./tests";
+const basePath = "";
 export const testsPath = basePath + "/cases";
 export const snapshotsPath = basePath + "/specs";
 

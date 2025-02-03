@@ -19,13 +19,13 @@
         {
             "label": "update snapshots",
             "type": "shell",
-            "command": "node out/tests/main.js",
+            "command": "node out/testing/syntaxHighlighting/main.js",
             "problemMatcher": []
         },
         {
             "label": "tmTests",
             "type": "shell",
-            "command": "vscode-tmgrammar-test -c -g syntaxes/hledger.tmLanguage.json 'tests/specs/*.want.hledger'",
+            "command": "vscode-tmgrammar-test -c -g syntaxes/hledger.tmLanguage.json 'src/testing/syntaxHighlighting/specs/*.want.hledger'",
             "group": "test",
             "presentation": {
                 "revealProblems": "onProblem",

@@ -198,8 +198,9 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "npm run test:tmTest",
-    "test:tmTest": "vscode-tmgrammar-test -c -g syntaxes/hledger.tmLanguage.json 'tests/specs/*.want.hledger'"
+    "test": "npm run test:vscode",
+    "test:tmTest": "vscode-tmgrammar-test -c -g syntaxes/hledger.tmLanguage.json 'src/testing/syntaxHighlighting/specs/*.want.hledger'",
+    "test:vscode": "vscode-test"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
@@ -207,7 +208,7 @@
     "@types/vscode": "^1.87.0",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
-    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-cli": "^0.0.8",
     "@vscode/test-electron": "^2.3.9",
     "eslint": "^8.56.0",
     "mocha-explorer-launcher-scripts": "^0.4.0",
