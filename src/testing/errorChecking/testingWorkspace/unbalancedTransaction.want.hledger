@@ -1,0 +1,9 @@
+account Assets:Cash
+
+commodity £0.00
+
+2023-01-03 Monthly Contributions Received - Patrick
+    Assets:Cash  £ 185.00
+;^^^^^^^^^^^^^^^^^^^^^^^^ error
+    Assets:Cash  £-184.00
+;^^^^^^^^^^^^^^^^^^^^^^^^ error
