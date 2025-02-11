@@ -3,8 +3,32 @@ import { CheckOptions, check } from "./check";
 import { JournalOptions, Journal, AlignmentType } from "./journal";
 
 export function activate(context: vscode.ExtensionContext) {
+  const journalMap = new Map<vscode.TextDocument, Journal>();
   const diagnosticCollection =
     vscode.languages.createDiagnosticCollection("hledger");
+
+  function getOrCreateJournal(document: vscode.TextDocument): Journal {
+    if (journalMap.has(document)) {
+      const configuration = vscode.workspace.getConfiguration();
+
+      const formatAmounts = configuration.get(
+        "hledger.formatting.formatAmounts",
+        true
+      );
+      const negativesInFrontOfCommodities = configuration.get(
+        "hledger.formatting.negativesInFrontOfCommodities",
+        true
+      );
+
+      const journalOptions: JournalOptions = {
+        formatAmounts: formatAmounts,
+        negativesInFrontOfCommodities: negativesInFrontOfCommodities,
+      };
+      const journal = new Journal(document, journalOptions);
+      journalMap.set(document, journal);
+    }
+    return journalMap.get(document)!;
+  }
 
   const completions = vscode.languages.registerCompletionItemProvider(
     "hledger",
@@ -15,22 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
         token: vscode.CancellationToken,
         context: vscode.CompletionContext
       ): Promise<vscode.CompletionItem[]> {
-        const configuration = vscode.workspace.getConfiguration();
-
-        const formatAmounts = configuration.get(
-          "hledger.formatting.formatAmounts",
-          true
-        );
-        const negativesInFrontOfCommodities = configuration.get(
-          "hledger.formatting.negativesInFrontOfCommodities",
-          true
-        );
-
-        const journalOptions: JournalOptions = {
-          formatAmounts: formatAmounts,
-          negativesInFrontOfCommodities: negativesInFrontOfCommodities,
-        };
-        const journal = new Journal(document, journalOptions);
+        const journal = getOrCreateJournal(document);
         await journal.updateJournal();
 
         const text = document.lineAt(position).text;
@@ -114,19 +123,6 @@ export function activate(context: vscode.ExtensionContext) {
 
         const configuration = vscode.workspace.getConfiguration();
 
-        const formatAmounts = configuration.get(
-          "hledger.formatting.formatAmounts",
-          true
-        );
-        const negativesInFrontOfCommodities = configuration.get(
-          "hledger.formatting.negativesInFrontOfCommodities",
-          true
-        );
-
-        const journalOptions: JournalOptions = {
-          formatAmounts: formatAmounts,
-          negativesInFrontOfCommodities: negativesInFrontOfCommodities,
-        };
         const formatPostingLines = configuration.get(
           "hledger.formatting.formatTransactions",
           true
@@ -168,7 +164,7 @@ export function activate(context: vscode.ExtensionContext) {
             AlignmentType[alignmentTypeConfig as keyof typeof AlignmentType] ||
             AlignmentType.both;
 
-          const journal = new Journal(document, journalOptions);
+          const journal = getOrCreateJournal(document);
           await journal.updateJournal();
 
           journal.transactions.forEach((transaction) => {
@@ -284,7 +280,7 @@ export function activate(context: vscode.ExtensionContext) {
       negativesInFrontOfCommodities: negativesInFrontOfCommodities,
     };
 
-    const journal = new Journal(e.document, journalOptions);
+    const journal = getOrCreateJournal(e.document);
     await journal.updateJournal();
 
     const VALIDATIONS = "hledger.validations.";
