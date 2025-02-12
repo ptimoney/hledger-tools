@@ -197,7 +197,7 @@ export class Journal {
 
   updateAccounts() {
     this.accountMap.clear();
-    const accountRegex = new RegExp(/^account ([^;\n ]+(?: [^;\n ]+)*)/gm);
+    const accountRegex = new RegExp(/^account ([^;\n\r ]+(?: [^;\n\r ]+)*)/gm);
 
     this.documentsMap.forEach((includedDocument) => {
       if (!includedDocument.document) {
