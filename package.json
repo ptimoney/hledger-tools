@@ -4,7 +4,7 @@
   "description": "Vscode extension for hledger",
   "publisher": "patrickt",
   "icon": "images/icon.png",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.87.0"
   },
