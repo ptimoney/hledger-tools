@@ -109,14 +109,19 @@ export class Journal {
           if (includeRelativeFilePath[0] === "/") {
             includeURIs.push(vscode.Uri.file(includeRelativeFilePath));
           } else {
-            const relativePattern = new vscode.RelativePattern(
-              thisFileLocationURI,
-              includeRelativeFilePath
+            includeURIs.push(
+              vscode.Uri.file(
+                path.join(thisFileLocation, includeRelativeFilePath)
+              )
             );
-            const foundFiles = await vscode.workspace.findFiles(
-              relativePattern
-            );
-            foundFiles.forEach((uri) => includeURIs.push(uri));
+            // const relativePattern = new vscode.RelativePattern(
+            //   thisFileLocationURI,
+            //   includeRelativeFilePath
+            // );
+            // const foundFiles = await vscode.workspace.findFiles(
+            //   relativePattern
+            // );
+            // foundFiles.forEach((uri) => includeURIs.push(uri));
           }
 
           for await (const includeUri of includeURIs) {

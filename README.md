@@ -30,7 +30,7 @@ VSCode extension for the text-based double-entry accounting tool
 - Auto postings - balance or assertion checking
 - Secondary dates
 
-## TODO
+## ToDo
 
 - Windows support
 - Diagnostic if a commodity is declared without decimal (warning) and no default declared (error)
@@ -45,6 +45,6 @@ VSCode extension for the text-based double-entry accounting tool
 ### V0.1
 
 - Fixed an issue after trying to include a file which wasn't there
-- Added support for glob patterns in include statements
+- (Reverted) Added support for glob patterns in include statements
 - Some performance improvments
 - Some functionality improvements for windows
