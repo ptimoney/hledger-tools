@@ -215,7 +215,7 @@ export async function activate(context: vscode.ExtensionContext) {
         if (formatWhiteSpace) {
           const emptyLineRegEx = new RegExp(/^\s*$/m);
 
-          const textSplit = document.getText().split("\n");
+          const textSplit = document.getText().split(/\r?\n/);
           textSplit.forEach((textLine, lineIndexInt) => {
             if (lineIndexInt < textSplit.length - 1) {
               if (

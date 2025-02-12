@@ -166,7 +166,7 @@ export class Journal {
   updateCommodityMap() {
     this.commodityMap.clear();
     const commodityLineRegex = new RegExp(
-      /^(?<commodityDirective>commodity|D) (?<leadingNegative>-?)(?:[ \t])*(?<leadingUnit>(?:"[^0-9"\n;\-]+"|[^ "0-9\n\-;]+)?[ \t]*)(?<trailingNegative>-?)(?<amount>[0-9,. ]+[0-9,.]|[0-9])?(?<trailingUnit> ?(?:"[^0-9"\n;\-]+"|[^ "=0-9\n\-;]+))?/gm
+      /^(?<commodityDirective>commodity|D) (?<leadingNegative>-?)(?:[ \t])*(?<leadingUnit>(?:"[^0-9"\n\r;\-]+"|[^ "0-9\n\r\-;]+)?[ \t]*)(?<trailingNegative>-?)(?<amount>[0-9,. ]+[0-9,.]|[0-9])?(?<trailingUnit> ?(?:"[^0-9"\n\r;\-]+"|[^ "=0-9\n\r\-;]+))?/gm
     );
 
     this.documentsMap.forEach((includedDocument, includedUri) => {
@@ -218,7 +218,7 @@ export class Journal {
 
   parseTransactions() {
     const transactionGroupRegex2 = new RegExp(
-      /^(?<date>(?:\d{2,4}[-\/.])?\d{2}[-\/.]\d{2})(?: (?<status>[!*]))?(?: (?<code>\([^;\n()]+\)))?(?: (?<description>[^;\n]+))?(?:;[^\n]*)?$\n^(?: +;[^\n]*$\n)*(?<postingLines>(?: +[\S][^\n]*)(?:\n +[\S][^\n]*)+)?/gm
+      /^(?<date>(?:\d{2,4}[-\/.])?\d{2}[-\/.]\d{2})(?: (?<status>[!*]))?(?: (?<code>\([^;\n\r()]+\)))?(?: (?<description>[^;\n\r]+))?(?:;[^\n\r]*)?$[\n\r]^(?: +;[^\n\r]*$[\n\r])*(?<postingLines>(?: +[\S][^\n\r]*)(?:[\n\r] +[\S][^\n\r]*)+)?/gm
     );
 
     let transactions: Transaction[] = [];
@@ -442,10 +442,10 @@ class Transaction {
       this.transactionString.match(escapeRegex(this.postingLines))?.index ?? 0;
 
     this.postings = this.postingLines
-      .split("\n")
+      .split(/\r?\n/)
       .map((postingLine, lineIndex) => {
         const priorPostings = this.postingLines
-          .split("\n")
+          .split(/\r?\n/)
           .slice(0, lineIndex)
           .join("\n");
 
@@ -605,7 +605,7 @@ class Posting {
   postingComment: string = "";
 
   postingRegex: RegExp = RegExp(
-    /^(?=.*[^\s].*)(?:[ \t]+)(?<account>[^;\n ]+(?: [^;\n ]+)*)?(?:[ \t]{2,})?(?:(?<postingLeadingNegative>[-+]?)(?:[ \t]*)(?<postingLeadingCommodityUnit>(?:"[^"\n]+"|[^ "0-9\n\-;@]+)?(?:[ \t]*))(?<postingTrailingNegative>[-+]?)(?:[ \t]*)(?<postingAmount>(?:[0-9]+[0-9,. ]?[0-9,.]+)|[0-9])?(?<postingTrailingCommodityUnit>(?:[ \t]*)(?:"[^"\n]+"|[^ "=0-9\n\-;@]+))?)?(?:(?:[ \t]*)(?<postingCostType>@{1,2})(?:[ \t]*)(?:(?<postingCostLeadingNegative>[-+]?)(?:[ \t]*)(?<postingCostLeadingCommodityUnit>(?:"[^"\n]+"|[^ "0-9\n\-;@]+)?(?:[ \t]*))(?<postingCostTrailingNegative>[-+]?)(?:[ \t]*)(?<postingCostAmount>(?:[0-9]+[0-9,. ]?[0-9,.]+)|[0-9])(?<postingCostTrailingCommodityUnit>(?:[ \t]*)(?:"[^"\n]+"|[^ "=0-9\n\-;@]+))?))?(?:(?:[ \t]*)(?<assertionType>={1,2})(?:[ \t]*)(?:(?<assertionLeadingNegative>[-+]?)(?:[ \t]*)(?<assertionLeadingCommodityUnit>(?:"[^"\n]+"|[^ "0-9\n\-;@]+)?(?:[ \t]*))(?<assertionTrailingNegative>[-+]?)(?:[ \t]*)(?<assertionAmount>(?:[0-9]+[0-9,. ]?[0-9,.]+)|[0-9])(?<assertionTrailingCommodityUnit>(?:[ \t]*)(?:"[^"\n]+"|[^ "=0-9\n\-;@]+))?))?(?:(?:[ \t]*)(?<assertionCostType>@{1,2})(?:[ \t]*)(?:(?<assertionCostLeadingNegative>[-+]?)(?:[ \t]*)(?<assertionCostLeadingCommodityUnit>(?:"[^"\n]+"|[^ "0-9\n\-;@]+)?(?:[ \t]*))(?<assertionCostTrailingNegative>[-+]?)(?:[ \t]*)(?<assertionCostAmount>(?:[0-9]+[0-9,. ]?[0-9,.]+)|[0-9])(?<assertionCostTrailingCommodityUnit>(?:[ \t]*)(?:"[^"\n]+"|[^ "=0-9\n\-;@]+))?))?(?:[ \t]*)(?<postingComment>;[^\n]*)?(?:[ \t])*$/dm
+    /^(?=.*[^\s].*)(?:[ \t]+)(?<account>[^;\n\r ]+(?: [^;\n\r ]+)*)?(?:[ \t]{2,})?(?:(?<postingLeadingNegative>[-+]?)(?:[ \t]*)(?<postingLeadingCommodityUnit>(?:"[^"\n\r]+"|[^ "0-9\n\r\-;@]+)?(?:[ \t]*))(?<postingTrailingNegative>[-+]?)(?:[ \t]*)(?<postingAmount>(?:[0-9]+[0-9,. ]?[0-9,.]+)|[0-9])?(?<postingTrailingCommodityUnit>(?:[ \t]*)(?:"[^"\n\r]+"|[^ "=0-9\n\r\-;@]+))?)?(?:(?:[ \t]*)(?<postingCostType>@{1,2})(?:[ \t]*)(?:(?<postingCostLeadingNegative>[-+]?)(?:[ \t]*)(?<postingCostLeadingCommodityUnit>(?:"[^"\n\r]+"|[^ "0-9\n\r\-;@]+)?(?:[ \t]*))(?<postingCostTrailingNegative>[-+]?)(?:[ \t]*)(?<postingCostAmount>(?:[0-9]+[0-9,. ]?[0-9,.]+)|[0-9])(?<postingCostTrailingCommodityUnit>(?:[ \t]*)(?:"[^"\n\r]+"|[^ "=0-9\n\r\-;@]+))?))?(?:(?:[ \t]*)(?<assertionType>={1,2})(?:[ \t]*)(?:(?<assertionLeadingNegative>[-+]?)(?:[ \t]*)(?<assertionLeadingCommodityUnit>(?:"[^"\n\r]+"|[^ "0-9\n\r\-;@]+)?(?:[ \t]*))(?<assertionTrailingNegative>[-+]?)(?:[ \t]*)(?<assertionAmount>(?:[0-9]+[0-9,. ]?[0-9,.]+)|[0-9])(?<assertionTrailingCommodityUnit>(?:[ \t]*)(?:"[^"\n\r]+"|[^ "=0-9\n\r\-;@]+))?))?(?:(?:[ \t]*)(?<assertionCostType>@{1,2})(?:[ \t]*)(?:(?<assertionCostLeadingNegative>[-+]?)(?:[ \t]*)(?<assertionCostLeadingCommodityUnit>(?:"[^"\n\r]+"|[^ "0-9\n\r\-;@]+)?(?:[ \t]*))(?<assertionCostTrailingNegative>[-+]?)(?:[ \t]*)(?<assertionCostAmount>(?:[0-9]+[0-9,. ]?[0-9,.]+)|[0-9])(?<assertionCostTrailingCommodityUnit>(?:[ \t]*)(?:"[^"\n\r]+"|[^ "=0-9\n\r\-;@]+))?))?(?:[ \t]*)(?<postingComment>;[^\n\r]*)?(?:[ \t])*$/dm
   );
 
   constructor(
