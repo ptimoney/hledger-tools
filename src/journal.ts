@@ -37,7 +37,18 @@ export class Journal {
   }
 
   async updateJournal() {
+    this.documentsMap.clear();
+    this.documentsMap.set(
+      this.journalDocument.uri.toString(),
+      new IncludedDocument(
+        0,
+        "",
+        this.journalDocument.uri,
+        this.journalDocument
+      )
+    );
     while (await this.updateIncludes()) {}
+    // this.updateIncludes();
     this.updateDefaultDecimalMarks();
     this.updateCommodityMap();
     this.updateAccounts();
@@ -68,11 +79,8 @@ export class Journal {
   }
 
   async updateIncludes(): Promise<boolean> {
-    const includesRegEx = new RegExp(/^include[\t ]?(.+)$/gm);
+    const includesRegex = new RegExp(/^include[\t ]?(.+)$/gm);
     let hasAddedDocuments = false;
-
-    let documentOpens: PromiseLike<void>[] = [];
-
     await Array.from(this.documentsMap).reduce(
       async (promise, [includedDocumentURI, includedDocument]) => {
         await promise;
@@ -80,9 +88,10 @@ export class Journal {
         if (!includedDocument.document) {
           return;
         }
+
         const includeMatches = includedDocument.document
           .getText()
-          .matchAll(includesRegEx);
+          .matchAll(includesRegex);
 
         for await (const includeMatch of includeMatches) {
           const includeRelativeFilePath = includeMatch[1];
@@ -90,47 +99,62 @@ export class Journal {
           const thisFileLocation = path.dirname(
             includedDocument.document.uri.fsPath
           );
+          const thisFileLocationURI = vscode.Uri.file(thisFileLocation);
           if (!thisFileLocation) {
             continue;
           }
-          const includeUri =
-            includeRelativeFilePath[0] === "/"
-              ? vscode.Uri.file(includeRelativeFilePath)
-              : vscode.Uri.parse(
-                  path.join(thisFileLocation, includeRelativeFilePath)
-                );
 
-          if (this.documentsMap.has(includeUri.toString())) {
-            continue;
+          let includeURIs: vscode.Uri[] = [];
+
+          if (includeRelativeFilePath[0] === "/") {
+            includeURIs.push(vscode.Uri.file(includeRelativeFilePath));
+          } else {
+            const relativePattern = new vscode.RelativePattern(
+              thisFileLocationURI,
+              includeRelativeFilePath
+            );
+            const foundFiles = await vscode.workspace.findFiles(
+              relativePattern
+            );
+            foundFiles.forEach((uri) => includeURIs.push(uri));
           }
 
-          await vscode.workspace.openTextDocument(includeUri).then(
-            (doc) => {
-              const includedDocumentToAdd = new IncludedDocument(
-                includeMatch.index,
-                includeMatch[0],
-                vscode.Uri.parse(includedDocumentURI),
-                doc
-              );
-              this.documentsMap.set(
-                includeUri.toString(),
-                includedDocumentToAdd
-              );
-              hasAddedDocuments = true;
-            },
-            () => {
-              const includedDocumentToAdd = new IncludedDocument(
-                includeMatch.index,
-                includeMatch[0],
-                vscode.Uri.parse(includedDocumentURI)
-              );
-              this.documentsMap.set(
-                includeUri.toString(),
-                includedDocumentToAdd
-              );
-              hasAddedDocuments = true;
+          for await (const includeUri of includeURIs) {
+            if (this.documentsMap.has(includeUri.toString())) {
+              return;
             }
-          );
+
+            const result = await vscode.workspace
+              .openTextDocument(includeUri)
+              .then(
+                (doc) => {
+                  const includedDocumentToAdd = new IncludedDocument(
+                    includeMatch.index,
+                    includeMatch[0],
+                    vscode.Uri.parse(includedDocumentURI),
+                    doc
+                  );
+                  this.documentsMap.set(
+                    includeUri.toString(),
+                    includedDocumentToAdd
+                  );
+                  hasAddedDocuments = true;
+                },
+                () => {
+                  const includedDocumentToAdd = new IncludedDocument(
+                    includeMatch.index,
+                    includeMatch[0],
+                    vscode.Uri.parse(includedDocumentURI),
+                    undefined
+                  );
+                  this.documentsMap.set(
+                    includeUri.toString(),
+                    includedDocumentToAdd
+                  );
+                  hasAddedDocuments = true;
+                }
+              );
+          }
         }
       },
       Promise.resolve()
@@ -140,6 +164,7 @@ export class Journal {
   }
 
   updateCommodityMap() {
+    this.commodityMap.clear();
     const commodityLineRegex = new RegExp(
       /^(?<commodityDirective>commodity|D) (?<leadingNegative>-?)(?:[ \t])*(?<leadingUnit>(?:"[^0-9"\n;\-]+"|[^ "0-9\n\-;]+)?[ \t]*)(?<trailingNegative>-?)(?<amount>[0-9,. ]+[0-9,.]|[0-9])?(?<trailingUnit> ?(?:"[^0-9"\n;\-]+"|[^ "=0-9\n\-;]+))?/gm
     );
@@ -171,6 +196,7 @@ export class Journal {
   }
 
   updateAccounts() {
+    this.accountMap.clear();
     const accountRegex = new RegExp(/^account ([^;\n ]+(?: [^;\n ]+)*)/gm);
 
     this.documentsMap.forEach((includedDocument) => {

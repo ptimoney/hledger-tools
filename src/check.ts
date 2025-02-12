@@ -36,7 +36,7 @@ export function check(
   // CHECK INCLUDES
   journal.documentsMap.forEach((document, documentURI) => {
     if (!document.document) {
-      const message = "This file does not exist at " + documentURI;
+      const message = "No file could be found at " + documentURI;
       const includeOffset = "include ".length;
       const error: HledgerError = {
         message: message,
@@ -48,6 +48,33 @@ export function check(
       errors.push(error);
     }
   });
+
+  const includesRegex = new RegExp(/^include[\t ]?(.+)$/gm);
+  const includeMatches = journal.journalDocument
+    .getText()
+    .matchAll(includesRegex);
+  for (const includeMatch of includeMatches) {
+    const includeString = includeMatch[0];
+    let match = false;
+    for (const includedDocument of journal.documentsMap.values()) {
+      if (includedDocument.includeString === includeString) {
+        match = true;
+      }
+    }
+
+    if (!match) {
+      const message =
+        "This pattern does not match any file. Consider checking the file path or including the correct file.";
+      const error: HledgerError = {
+        message: message,
+        startIndex: includeMatch.index,
+        endIndex: includeMatch.index + includeString.length,
+        severity: vscode.DiagnosticSeverity.Warning,
+        file: journal.journalDocument.uri,
+      };
+      errors.push(error);
+    }
+  }
 
   // CHECK TRANSACTIONS
   journal.transactions.forEach((transaction, transactionIndex) => {

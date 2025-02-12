@@ -2,13 +2,13 @@ import * as vscode from "vscode";
 import { CheckOptions, check } from "./check";
 import { JournalOptions, Journal, AlignmentType } from "./journal";
 
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   const journalMap = new Map<vscode.TextDocument, Journal>();
   const diagnosticCollection =
     vscode.languages.createDiagnosticCollection("hledger");
 
   function getOrCreateJournal(document: vscode.TextDocument): Journal {
-    if (journalMap.has(document)) {
+    if (!journalMap.has(document)) {
       const configuration = vscode.workspace.getConfiguration();
 
       const formatAmounts = configuration.get(
@@ -264,24 +264,27 @@ export function activate(context: vscode.ExtensionContext) {
       return;
     }
     diagnosticCollection.clear();
-    const configuration = vscode.workspace.getConfiguration();
+    const changedDocument = e.document;
 
-    const formatAmounts = configuration.get(
-      "hledger.formatting.formatAmounts",
-      true
-    );
-    const negativesInFrontOfCommodities = configuration.get(
-      "hledger.formatting.negativesInFrontOfCommodities",
-      true
-    );
+    await checkDocument(changedDocument);
+  });
 
-    const journalOptions: JournalOptions = {
-      formatAmounts: formatAmounts,
-      negativesInFrontOfCommodities: negativesInFrontOfCommodities,
-    };
+  const closeDocument = vscode.workspace.onDidCloseTextDocument((doc) =>
+    diagnosticCollection.delete(doc.uri)
+  );
 
-    const journal = getOrCreateJournal(e.document);
+  context.subscriptions.push(formatter, completions, validator, closeDocument);
+
+  async function checkDocument(document: vscode.TextDocument) {
+    const journal = getOrCreateJournal(document);
     await journal.updateJournal();
+
+    journal.documentsMap.forEach((includedDocument) => {
+      if (!includedDocument.document) {
+        return;
+      }
+      includedDocument.diagnostics = [];
+    });
 
     const VALIDATIONS = "hledger.validations.";
     const validationKeys = [
@@ -294,6 +297,7 @@ export function activate(context: vscode.ExtensionContext) {
       "unique_leaf_names",
     ];
 
+    const configuration = vscode.workspace.getConfiguration();
     const validationSettings = getValidationSettings(
       configuration,
       VALIDATIONS,
@@ -340,13 +344,10 @@ export function activate(context: vscode.ExtensionContext) {
         includedDocument.diagnostics
       );
     });
-  });
+  }
+  const activationDocument = vscode.window.activeTextEditor?.document;
 
-  const closeDocument = vscode.workspace.onDidCloseTextDocument((doc) =>
-    diagnosticCollection.delete(doc.uri)
-  );
-
-  context.subscriptions.push(formatter, completions, validator, closeDocument);
+  await checkDocument(activationDocument!);
 }
 
 function getValidationSettings(
