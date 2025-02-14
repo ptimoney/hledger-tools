@@ -330,7 +330,7 @@ class Commodity {
     const signatureRegex = RegExp(
       `^(?:(?:\\d{1,3}(?:${escapeRegex(
         this.thousandSeparator
-      )}\\d{3})*(?:\\.\\d{0,2})?)|(?:\\d*(?:${escapeRegex(
+      )}\\d{3})*(?:${escapeRegex(this.decimalMark)}\\d{0,2})?)|(?:\\d*(?:${escapeRegex(
         this.decimalMark
       )}\\d{0,${precisionInAmountString.toString()}})?))[ \\t]*$`,
       "m"
