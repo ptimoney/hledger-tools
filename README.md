@@ -1,9 +1,11 @@
+# This tool has been deprecated and is replaced by [hledger-vscode](https://github.com/ptimoney/hledger-vscode)
+
 # hledger Tools
 
 VSCode extension for the text-based double-entry accounting tool
 [hledger](https://hledger.org/start.html)
 
-## Features:
+## Features
 
 - Diagnostics:
   - Balanced transaction checking - with multiple commodities & costs
@@ -14,11 +16,11 @@ VSCode extension for the text-based double-entry accounting tool
 - Account completion
 - Auto formatting
   - Auto formatting of commodities.
-  - Auto alignment
+  - Auto alignmentled
 - Syntax Highlighting (heavily based on [mhansen/hledger-vscode](https://github.com/mhansen/hledger-vscode))
 - Parsing of included files with some support for glob patterns.
 
-## Known issues:
+## Known issues
 
 - Minimal/No windows support. This is planned to be fixed
 - Issues using globs in includes
